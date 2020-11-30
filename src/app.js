@@ -55,7 +55,7 @@ App = {
 
   loadContract: async () => {
     // Create a JavaScript version of the smart contract
-    const todoList = await $.getJSON("TodoList.json");
+    const todoList = await $.getJSON("ToDoList.json");
     App.contracts.TodoList = TruffleContract(todoList);
     App.contracts.TodoList.setProvider(App.web3Provider);
 
@@ -114,6 +114,13 @@ App = {
       // Show the task
       $newTaskTemplate.show();
     }
+  },
+
+  createTask: async () => {
+    App.setLoading(true);
+    const content = $("#newTask").val();
+    await App.todoList.createTask(content);
+    window.location.reload();
   },
 
   setLoading: (boolean) => {
